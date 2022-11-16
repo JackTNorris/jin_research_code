@@ -4,6 +4,7 @@ import numpy as np
 
 wt = 0
 
+#jpt algorithm
 def jpt_algo(kMin1, kMin2, kMin3):
     #to find the measurement at time k, take 
     # the 3 measurements prior (kMin1 ... KMin3) and plug it into the following to get
@@ -18,6 +19,7 @@ def calculate_complex_voltage(magnitude, phase_angle):
     voltage = complex(real_portion, imaginary_portion)
     return voltage
 
+# based on a voltage in the form V = a + bi, it extracts the magnitude and the voltage
 def phase_angle_and_magnitude_from_complex_voltage(voltage):
     phase_angle =  math.atan(voltage.image / voltage.real) - wt #finds phase angle in radians
     magnitude = voltage.real / math.cos(phase_angle + wt)
