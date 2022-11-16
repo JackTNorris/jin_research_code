@@ -35,5 +35,3 @@ if __name__ == "__main__":
         kMin.insert(pmu_measurements[num]["magnitude"], pmu_measurements[num]["voltage"])
     complex_voltage_future_approximation = jpt_algo(kMin[0],kMin[1],kMin[3])
     print(phase_angle_and_magnitude_from_complex_voltage(complex_voltage_future_approximation))
-
-print("hello")
