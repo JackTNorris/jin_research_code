@@ -2,6 +2,7 @@ import math
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from statistics import mean 
 
 
 wt = 0
@@ -37,7 +38,7 @@ def phase_angle_and_magnitude_from_complex_voltage(voltage):
 
 def generate_jpt_predictions(magnitudes, phase_angles):
     predictions = {"magnitudes": [], "phase_angles": []}
-    for i in range(0, len(magnitudes) - 3):
+    for i in range(len(magnitudes) - 3):
         three_previous = []
         for j in range(i, i + 3):
             three_previous.append({"magnitude": magnitudes[j], "phase_angle": phase_angles[j]})
@@ -51,6 +52,15 @@ def generate_jpt_predictions(magnitudes, phase_angles):
         predictions["phase_angles"].append(predicted_phase_angle)
     return predictions
 
+def calculate_approximation_error(exact, approximate):
+    return abs(exact - approximate) / exact * 100
+
+def calculate_average_approximation_error(exact_measurements, approximate_measurements):
+    approximation_errors = []
+    for i in range(len(exact_measurements)):
+        approximation_errors.append(calculate_approximation_error(exact_measurements[i], approximate_measurements[i]))
+    print(approximation_errors)
+    return mean(approximation_errors)
 
 
 if __name__ == "__main__":
@@ -62,6 +72,6 @@ if __name__ == "__main__":
 
     y2 = generate_jpt_predictions(pmu_raw_data["magnitudes"][0], pmu_raw_data["phase_angles"][0])["magnitudes"]
 
-
+    print("Approximation error average: " + str(calculate_average_approximation_error(y1, y2)))
     ax.plot(x, y2, color="r", label="predicted")
     plt.show()
